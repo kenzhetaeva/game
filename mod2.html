@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="mod2.css">
+</head>
+<body>
+<header>
+    <h1>Rock Paper Scissors</h1>
+</header>
+<div class="round_">
+    <span id="round_name">Round</span>: <span id="round">1 </span>
+</div>
+<div class="score">
+    <div id="user" class="badge">YOU</div>
+    <div id="comp" class="badge">COMP</div>
+    <span id="user_score">0</span>:<span id="comp_score">0</span>
+</div>
+<div class="result">
+    <p> </p>
+</div>
+<div class="choices">
+    <div id="r" class="choice">
+        <img src="https://www.campcanary.co.uk/uploads/rock-icon-grey.png" alt="picture">
+    </div>
+    <div id="p" class="choice">
+        <img src="https://www.campcanary.co.uk/uploads/paper-icon-grey.png" alt="picture">
+    </div>
+    <div id="s" class="choice">
+        <img src="https://www.campcanary.co.uk/uploads/scissors-icon-grey.png" alt="picture">
+    </div>
+</div>
+<p id="action">Make your move</p>
+<script>
+    var count = 1, user_sc = 0, comp_sc = 0, winner;
+    var user_span = document.getElementById('user_score');
+    var comp_span = document.getElementById('comp_score');
+    var rock = document.getElementById('r');
+    var paper = document.getElementById('p');
+    var scissors = document.getElementById('s');
+    var res = document.querySelector('.result > p');
+    //var sc_br = document.querySelector('.score');
+    var round = document.getElementById('round');
+    var choice = ['r', 'p', 's'];
+    function win(user_ch, comp_ch) {
+        user_sc++;
+        round.innerHTML = count;
+        user_span.innerHTML = user_sc;
+        comp_span.innerHTML = comp_sc;
+        switch (user_ch) {
+            case 's': user_ch = 'scissors'; break;
+            case 'p': user_ch = 'paper'; break;
+            case 'r': user_ch = 'rock'; break;
+        }
+        switch (comp_ch) {
+            case 's': comp_ch = 'scissors'; break;
+            case 'p': comp_ch = 'paper'; break;
+            case 'r': comp_ch = 'rock'; break;
+        }
+        res.innerHTML = 'USER: ' + user_ch + ', COMPUTER: ' + comp_ch + '.<br>'
+            + user_ch + ' beats ' + comp_ch + '. YOU WIN!';
+        if(user_sc > comp_sc) winner = 'you!!!';
+        else if(comp_sc > user_sc) winner = 'computer';
+        else winner = 'nobody';
+    }
+    function lose(user_ch, comp_ch) {
+        comp_sc++;
+        round.innerHTML = count;
+        user_span.innerHTML = user_sc;
+        comp_span.innerHTML = comp_sc;
+        switch (user_ch) {
+            case 's': user_ch = 'scissors'; break;
+            case 'p': user_ch = 'paper'; break;
+            case 'r': user_ch = 'rock'; break;
+        }
+        switch (comp_ch) {
+            case 's': comp_ch = 'scissors'; break;
+            case 'p': comp_ch = 'paper'; break;
+            case 'r': comp_ch = 'rock'; break;
+        }
+        res.innerHTML = 'USER: ' + user_ch + ', COMPUTER: ' + comp_ch + '.<br>'
+            + comp_ch + ' beats ' + user_ch + '. YOU LOSE!';
+        if(user_sc > comp_sc) winner = 'you!!!';
+        else if(comp_sc > user_sc) winner = 'computer';
+        else winner = 'nobody';
+    }
+    function draw(user_ch, comp_ch) {
+        round.innerHTML = count;
+        user_span.innerHTML = user_sc;
+        comp_span.innerHTML = comp_sc;
+        switch (user_ch) {
+            case 's': user_ch = 'scissors'; break;
+            case 'p': user_ch = 'paper'; break;
+            case 'r': user_ch = 'rock'; break;
+        }
+        switch (comp_ch) {
+            case 's': comp_ch = 'scissors'; break;
+            case 'p': comp_ch = 'paper'; break;
+            case 'r': comp_ch = 'rock'; break;
+        }
+        res.innerHTML = 'USER: ' + user_ch + ', COMPUTER: ' + comp_ch + '.<br> DRAW!'
+        if(user_sc > comp_sc) winner = 'you!!!';
+        else if(comp_sc > user_sc) winner = 'computer';
+        else winner = 'nobody';
+    }
+    function game(user_ch) {
+        count++;
+        if (count < 4) {
+            var comp_ch = choice[Math.floor(Math.random() * 3)];
+            if (user_ch === comp_ch) draw(user_ch, comp_ch);
+            else if (user_ch === "r") {
+                if (comp_ch === "s") win(user_ch, comp_ch);
+                else if (comp_ch === "p") lose(user_ch, comp_ch);
+            }
+            else if (user_ch === "p") {
+                if (comp_ch === "r") win(user_ch, comp_ch)
+                else if (comp_ch === "s") lose(user_ch, comp_ch);
+            }
+            else if (user_ch === "s") {
+                if (comp_ch === "r") lose(user_ch, comp_ch);
+                else if (comp_ch === "p") win(user_ch, comp_ch);
+            }
+        }
+        else res.innerHTML = 'Game over. ' + 'In that game winner is ' + winner;
+    }
+    function main() {
+        rock.addEventListener('click', function () {
+            game('r');
+        })
+        paper.addEventListener('click', function () {
+            game('p');
+        })
+        scissors.addEventListener('click', function () {
+            game('s');
+        })
+    }
+    main();
+
+</script>
+
+</body>
+</html>
